@@ -990,6 +990,7 @@ angular.module('ui.bootstrap.position', [])
 
 angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootstrap.position'])
 
+// BBUG - Changed showWeeks default to false as there's a bug that stops show-weeks working when using the datepicker popup
 .constant('datepickerConfig', {
   formatDay: 'dd',
   formatMonth: 'MMMM',
@@ -1000,7 +1001,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   datepickerMode: 'day',
   minMode: 'day',
   maxMode: 'year',
-  showWeeks: true,
+  showWeeks: false,
   startingDay: 0,
   yearRange: 20,
   minDate: null,
@@ -3900,12 +3901,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
     };
   });
 
+// BBUG - Updated accordian toggle so clicking anywhere in the heading triggers the collapse toggle
 angular.module("template/accordion/accordion-group.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/accordion/accordion-group.html",
     "<div class=\"panel panel-default\">\n" +
-    "  <div class=\"panel-heading\">\n" +
+    "  <div class=\"panel-heading\" ng-click=\"toggleOpen()\">\n" +
     "    <h4 class=\"panel-title\">\n" +
-    "      <a href class=\"accordion-toggle\" ng-click=\"toggleOpen()\" accordion-transclude=\"heading\"><span ng-class=\"{'text-muted': isDisabled}\">{{heading}}</span></a>\n" +
+    "      <span class=\"accordion-toggle\" accordion-transclude=\"heading\"><span ng-class=\"{'text-muted': isDisabled}\">{{heading}}</span></span>\n" +
     "    </h4>\n" +
     "  </div>\n" +
     "  <div class=\"panel-collapse\" collapse=\"!isOpen\">\n" +
@@ -4102,6 +4104,7 @@ angular.module("template/tooltip/tooltip-popup.html", []).run(["$templateCache",
     "");
 }]);
 
+// BBUG - Changed popover-content ng-bind to ng-bind-html to permit HTML content
 angular.module("template/popover/popover.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/popover/popover.html",
     "<div class=\"popover {{placement}}\" ng-class=\"{ in: isOpen(), fade: animation() }\">\n" +
@@ -4109,7 +4112,7 @@ angular.module("template/popover/popover.html", []).run(["$templateCache", funct
     "\n" +
     "  <div class=\"popover-inner\">\n" +
     "      <h3 class=\"popover-title\" ng-bind=\"title\" ng-show=\"title\"></h3>\n" +
-    "      <div class=\"popover-content\" ng-bind=\"content\"></div>\n" +
+    "      <div class=\"popover-content\" ng-bind-html=\"content\"></div>\n" +
     "  </div>\n" +
     "</div>\n" +
     "");
